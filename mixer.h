@@ -1,8 +1,8 @@
 /* metaFx - .
  *
- * This is the main function for the MetaSurface.
+ * This is the main function for the MetaFx.
  *
- * Copyright 2020-2021 dominique Blanchemain
+ * Copyright 2022-2023 dominique Blanchemain
  *
  *
  * metaFx is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License
