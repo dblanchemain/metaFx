@@ -1,4 +1,4 @@
-/* MetaFxe  .
+/* MetaFx  .
  *
  * this file is part of the MetaFx application
  *
