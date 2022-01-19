@@ -11,4 +11,4 @@ else
 
 fi 
 
-/usr/local/share/metaFx  $HOME
+/usr/local/share/metaFx /usr/local/share/metaFx $HOME
