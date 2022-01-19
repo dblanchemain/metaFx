@@ -1,7 +1,5 @@
 #! /bin/sh
 
-#! /bin/sh 
-
 if [ -d $HOME/.config/metaFx ] ; then 
 
 	echo "Le dossier de travail ($HOME)/metaFx existe" 
