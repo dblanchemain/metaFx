@@ -9,7 +9,7 @@ Pour intaller cette application :
 
 git clone https://github.com/dblanchemain/metaFx
 
-make metaFx
+make all
 
 make install PREFIX=/usr/local
 
