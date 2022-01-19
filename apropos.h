@@ -1,8 +1,8 @@
-/* MetaSurface  .
+/* MetaFx.
  *
- * this file is part of the MetaSurface application
+ * this file is part of the MetaFx application
  *
- * Copyright 2020-2021 dominique Blanchemain
+ * Copyright 2020-2022 dominique Blanchemain
  *
  *
  * MetaSurface is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License
