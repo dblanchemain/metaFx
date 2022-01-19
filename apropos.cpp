@@ -2,7 +2,7 @@
  *
  * this file is part of the MetaFx application
  *
- * Copyright 2020-2022 dominique Blanchemain
+ * Copyright 20220-2023 dominique Blanchemain
  *
  *
  * MetaSurface is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License
