@@ -4052,7 +4052,7 @@ void defStringDSP(){
 	*/
 }
 void saveDsp(string dsp, string param){
-	string s=defInstall;
+	string s=home+"/.config/metaFx";
 	char * cstr = new char [s.length()+1];
    std::strcpy (cstr, s.c_str());
    int ncwd=chdir(cstr);
@@ -4061,11 +4061,9 @@ void saveDsp(string dsp, string param){
 	
    if(fichier){
    	fichier<<dsp<< endl;
-   }
-   	
+   }	
    fichier.close();
-   string cmd="./dynamic-jack-gtk -llvm -osc fileFx.dsp &";
-   //string cmd="faust2jack -soundfile -osc fileFx.dsp ";
+   string cmd="./dynamic-jack-gtk -llvm -osc "+wfile+" &";
    char* dest = new char[cmd.length() + 1];
    std::copy(cmd.begin(), cmd.end(), dest);
    int id=system(dest);
