@@ -134,7 +134,7 @@ Mixer ViewGreffon::drawGreffon(Mixer& newPlug, int index, std::map<std::string, 
 	std::cout << "newPlug: "<<newPlug.listExterne[index].label<< " newPlug size: "<<newPlug.listExterne.size()<< std::endl;
 	std::cout << " newPlug size: "<<newPlug.listExterne[0].tableParam.size()<< std::endl;
 	std::cout << " newPlug size: "<<newPlug.listExterne[0].tableParam[0].label<< std::endl;
-	std::cout << " newPlug size: "<<newPlug.listExterne[0].tableParam[1].label<< std::endl;
+	//std::cout << " newPlug size: "<<newPlug.listExterne[0].tableParam[1].label<< std::endl;
 	//std::cout << " newPlug size: "<<newPlug.listExterne[0].tableParam[2].label<< std::endl;
 
 	shapePluginContraintes.setSize(sf::Vector2f(374,54+(28*newPlug.listExterne[index].tableParam.size())));
