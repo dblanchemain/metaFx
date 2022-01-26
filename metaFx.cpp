@@ -2169,9 +2169,9 @@ void onClick(sf::Event e){
 		tableMixer[mixerActif].setPosX(e.mouseButton.x-12);
 		tableMixer[mixerActif].setPosY(e.mouseButton.y-12);
 		if(tableMixer[mixerActif].getRelatif()==0){
-			controlGainMixer(e,mixerActif);
+			controlGainMixer(mixerActif);
 		}else{
-			controlGainRelatif(e,mixerActif);
+			controlGainRelatif(mixerActif);
 		}
 	}
 	if(appFlag==0){
@@ -2340,9 +2340,9 @@ void onMouseMove(sf::Event e){
 		       	tableMixer[mixerActif].setPosX(e.mouseMove.x-12);
 					tableMixer[mixerActif].setPosY(e.mouseMove.y-12);
 					if(tableMixer[mixerActif].getRelatif()==0){
-						controlGainMixer(e,mixerActif);
+						controlGainMixer(mixerActif);
 					}else{
-						controlGainRelatif(e,mixerActif);
+						controlGainRelatif(mixerActif);
 					}
 		     		break;
        	  case 1:
@@ -2354,9 +2354,9 @@ void onMouseMove(sf::Event e){
 	       	  			tableMixer[i].setPosX(tableMixer[i].getPosX()+dx);
 	       	  			tableMixer[i].setPosY(tableMixer[i].getPosY()+dy);
 	       	  			if(tableMixer[mixerActif].getRelatif()==0){
-								controlGainMixer(e,i);
+								controlGainMixer(i);
 							}else{
-								controlGainRelatif(e,i);
+								controlGainRelatif(i);
 							}
        	  			}
        	  		}
@@ -2371,9 +2371,9 @@ void onMouseMove(sf::Event e){
        	  			tableMixer[i].setPosX(tableMixer[i].getPosX()+dx);
 	       	  		tableMixer[i].setPosY(tableMixer[i].getPosY()+dy);
 	       	  		if(tableMixer[mixerActif].getRelatif()==0){
-							controlGainMixer(e,i);
+							controlGainMixer(i);
 						}else{
-							controlGainRelatif(e,i);
+							controlGainRelatif(i);
 						}
        	  		}
        	  		oldMoveX=e.mouseMove.x;
@@ -2783,7 +2783,7 @@ void createMixer(){
 	baseIdCompte+=1;
 	newMixer.setPosX(200);
 	newMixer.setPosY(300);
-	newMixer.setGainMin(0.1);
+	newMixer.setGainMin(0.01);
 	newMixer.setGainMax(1.0);
 	newMixer.setRevGain(1);
 	newMixer.setDaw(1);
@@ -2792,7 +2792,7 @@ void createMixer(){
 	newMixer.setSpeedMax(2);
 	newMixer.setRevSpeed(1);
 	newMixer.setRelatif(0);
-	newMixer.setGain(0);
+	newMixer.setGain(0.01);
 	newMixer.setFx(1);
 	newMixer.setTrack(0);
 	newMixer.setGroupe(defautGroupe);
@@ -2811,7 +2811,7 @@ void createPave(){
 	pv.rayon=100;
 	pv.scale=1.0;
 	pv.img=0;
-	pv.gainMin=0.10;
+	pv.gainMin=0.01;
 	pv.gainMax=0.99;
 	pv.trouNoir=0;
 	tablePave.push_back(pv);
@@ -3512,7 +3512,7 @@ const vector<string>  explode(const string& s, const char& c){
 //*********************************************************************************************************************
 //													Controleurs
 //*********************************************************************************************************************
-void controlGainMixer(sf::Event e,int id){
+void controlGainMixer(int id){
 	float x=(windowAppWidth/2)*(windowAppWidth/2);
 	float y=((windowAppHeight-60)/2)*((windowAppHeight-60)/2);
 	float dx=sqrt(x+y);
@@ -3535,13 +3535,13 @@ void controlGainMixer(sf::Event e,int id){
 	}
 	cm="/fileFx/Mixer/M"+to_string(id)+"/Player/Param/gain_"+to_string(id);
 	oscSendGain(cm,dt);
-	controlSpeedMixer(e,id);
-	controlParamsMixer(e,id,dx,dt2);
-	uptdateGreffon(e,id,dx,dt2);
+	controlSpeedMixer(id);
+	controlParamsMixer(id,dx,dt2);
+	uptdateGreffon(id,dx,dt2);
 	cout <<" dx1 : " << dx<<" mx = "<< mx<<" distance "<<dt2<<" gain : "<<dt<< endl;
-	controlGainPave(e);
+	controlGainPave();
 }
-void controlSpeedMixer(sf::Event e,int id){
+void controlSpeedMixer(int id){
 	float x=(windowAppWidth/2)*(windowAppWidth/2);
 	float y=((windowAppHeight-60)/2)*((windowAppHeight-60)/2);
 	float dx=sqrt(x+y);
@@ -3567,7 +3567,7 @@ void controlSpeedMixer(sf::Event e,int id){
 		oscSendGain(cm,dt);
 	}
 }
-void controlGainRelatif(sf::Event e,int id){
+void controlGainRelatif(int id){
 	float newR;
 	float cx;
 	float cy;
@@ -3607,15 +3607,16 @@ void controlGainRelatif(sf::Event e,int id){
 		if(dt2<newR){
 			cm="/fileFx/Mixer/M"+to_string(id)+"/Player/Param/gain_"+to_string(id);
 			oscSendGain(cm,g);
-			controlParamsMixer(e,id,newR,dt2);
-			uptdateGreffon(e,id,newR,dt2);
-			controlGainPave(e);
+			controlSpeedMixer(id);
+			controlParamsMixer(id,newR,dt2);
+			uptdateGreffon(id,newR,dt2);
+			controlGainPave();
 		}
 		cout <<" dx1 : " << newR<<" distance "<<dt2<<" gain : "<<g<< endl;
 	}
 }
 
-void controlGainPave(sf::Event e){
+void controlGainPave(){
 	float mx;
 	float dt;
 	float newR;
@@ -3637,7 +3638,7 @@ void controlGainPave(sf::Event e){
 		}
 	}
 }
-void controlParamsMixer(sf::Event e,int id,float dx, float dt2){
+void controlParamsMixer(int id,float dx, float dt2){
 	float amp;
 	float mx;
 	float dt;
@@ -3674,7 +3675,7 @@ void controlParamsMixer(sf::Event e,int id,float dx, float dt2){
 		cout <<" module size " << tableMixer[mixerActif].listModules.size()<< endl;
 	}
 }
-void uptdateGreffon(sf::Event e, int id, float dx,float dt2){
+void uptdateGreffon(int id, float dx,float dt2){
 	float amp;
 	float mx;
 	float dt;
@@ -3703,12 +3704,12 @@ void uptdateGreffon(sf::Event e, int id, float dx,float dt2){
 					piste=tableMixer[id].getTrack();
 					if(prefDAW==0){
 						cm="/strip/plugin/parameter";
-						a.send(cm, "iiif",piste,i+1,j+1,dt);
+						a.send(cm, "iiif",piste,i+1,tableMixer[id].listExterne[i].tableParam[j].index,dt);
 					}else{
 						cm="/track/"+to_string(piste)+"/fx/"+to_string(i+1)+"/fxparam/"+to_string(j+1)+"/value";
 						a.send(cm, "f",dt/tableExterne[tableMixer[id].listExterne[i].label].tableParam[j].max);
 					}
-					std::cout<<"prefDAW "<< prefDAW<<" commande "<<cm<<" Piste "<<piste<<" ordre "<<i+1<<" param "<< j+1<<" f "<<dt<<" dt "<<dt/tableMixer[id].listExterne[i].tableParam[j].max<< std::endl;
+					std::cout<<"prefDAW "<< prefDAW<<" commande "<<cm<<" Piste "<<piste<<" ordre "<<i+1<<" param "<< tableMixer[id].listExterne[i].tableParam[j].index<<" f "<<dt<<" dt "<<dt/tableMixer[id].listExterne[i].tableParam[j].max<< std::endl;
 				}
 			}
 		}
@@ -3885,8 +3886,8 @@ void defStringDSP(){
 	prog=prog+"vmeter(i,x)= attach(x, envelop(x) : vbargraph(\"%2i[unit:dB]\", -70, +5));\n";
 	prog=prog+"envelop = abs : max ~ -(1.0/ma.SR) : max(ba.db2linear(-70)) : ba.linear2db;\n";
 	prog=prog+"sample(x) = so.sound(ds, x);\n";
-	prog=prog+"ingain(i) = vslider(\"[0]gain%2i\",0.1,0,2,0.01) : si.smoo;\n";
-	prog=prog+"sgain(i) = vslider(\"[0]gain%2i\",0.1,0,2,0.01) : si.smoo;\n";
+	prog=prog+"ingain(i) = vslider(\"[0]gain%2i\",0.01,0,2,0.01) : si.smoo;\n";
+	prog=prog+"sgain(i) = vslider(\"[0]gain%2i\",0.01,0,2,0.01) : si.smoo;\n";
 	prog=prog+"sspeed(i)=vslider(\"[1]speed%2i\",1.0,0,2,0.01) : si.smoo;\n";
 	prog=prog+"lect2(x)=hgroup(\"Player\",x);\n";
 	
@@ -4151,7 +4152,15 @@ void saveDsp(string dsp, string param){
    char* dest = new char[cmd.length() + 1];
    std::copy(cmd.begin(), cmd.end(), dest);
    int id=system(dest);
-
+   sleep (1);
+   for(int i=0;i<tableMixer.size();i++){
+ 	  	if(tableMixer[i].getRelatif()==0){
+			controlGainMixer(i);
+		}else{
+			controlGainRelatif(i);
+		}
+ 	}
+	
 }
 int moduleSearchId(string s,int id){
 	int rt;
