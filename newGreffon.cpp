@@ -263,13 +263,13 @@ void NewGreffon::onClickContraintes(sf::Event e){
    	flagContraintesFxCurseur=1;
    	winContraintesFxCurseur.setPosition(118,10);
    }
-   if(e.mouseButton.x>76 && e.mouseButton.x<342 &&e.mouseButton.y>80 && e.mouseButton.y<80+(30*7)){
+   if(e.mouseButton.x>46 && e.mouseButton.x<136 &&e.mouseButton.y>80 && e.mouseButton.y<80+(30*7)){
    	id=(e.mouseButton.y-80)/30;
    	jd=0;
    	std::cout << "id: " << id <<"jd"<<jd<< std::endl;
    	textDef=id;
    	textRand=1;
-   	tabParam[id].max.setString("");
+   	tabParam[id].label.setString("");
    	apptxt="";
    	flagTxt=1;
    	flagContraintesFxCurseur=1;
@@ -282,9 +282,6 @@ void NewGreffon::onClickContraintes(sf::Event e){
    	textDef=id;
    	textRand=1;
    	switch (jd){
-  				case 0:
-  					tabParam[id].label.setString("");
-  					break;
   				case 1:
   					tabParam[id].index.setString("");
   					break;

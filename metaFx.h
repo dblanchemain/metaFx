@@ -313,12 +313,12 @@ void savePref();
 //************************************************************************
 //													Controleurs
 //************************************************************************
-void controlGainMixer(sf::Event e,int id);
-void controlGainRelatif(sf::Event e,int id);
-void controlSpeedMixer(sf::Event e,int id);
-void controlParamsMixer(sf::Event e,int id, float dx, float dt);
-void controlGainPave(sf::Event e);
-void uptdateGreffon(sf::Event e, int id, float dx,float dt2);
+void controlGainMixer(int id);
+void controlGainRelatif(int id);
+void controlSpeedMixer(int id);
+void controlParamsMixer(int id, float dx, float dt);
+void controlGainPave();
+void uptdateGreffon(int id, float dx,float dt2);
 void oscSendGain(std::string ms, float dt);
 float distance(float x1, float y1, float x2, float y2);
 //************************************************************************
