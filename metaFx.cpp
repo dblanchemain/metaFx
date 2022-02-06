@@ -2811,7 +2811,7 @@ void createPave(){
 	pv.rayon=100;
 	pv.scale=1.0;
 	pv.img=0;
-	pv.gainMin=0.01;
+	pv.gainMin=0.0;
 	pv.gainMax=0.99;
 	pv.trouNoir=0;
 	tablePave.push_back(pv);
@@ -3628,13 +3628,22 @@ void controlGainPave(){
 			mx=tablePave[i].gainMax/newR;
 			dt=distance(tablePave[i].pavX+newR,tablePave[i].pavY+newR,tableMixer[j].getPosX(),tableMixer[j].getPosY());
 			if(dt<newR){
-				maxDt=maxDt+tablePave[i].gainMax-(dt*mx);
-			if(maxDt>tablePave[i].gainMax){
-				maxDt=tablePave[i].gainMax;
+				if(tablePave[i].trouNoir==0){
+					maxDt=tablePave[i].gainMax-(dt*mx);
+				}else{
+					maxDt=tablePave[i].gainMin+(dt*mx);	
+				}
+				if(maxDt>tablePave[i].gainMax){
+					maxDt=tablePave[i].gainMax;
+				}
+				if(maxDt<tablePave[i].gainMin){
+					maxDt=tablePave[i].gainMin;
+				}
+			}else{
+				maxDt=tablePave[i].gainMin;
 			}
 			string cm="/fileFx/Mixer/P"+to_string(i)+"/Player/Param/gain_"+to_string(i);
 			oscSendGain(cm,maxDt);
-			}
 		}
 	}
 }
@@ -3886,8 +3895,8 @@ void defStringDSP(){
 	prog=prog+"vmeter(i,x)= attach(x, envelop(x) : vbargraph(\"%2i[unit:dB]\", -70, +5));\n";
 	prog=prog+"envelop = abs : max ~ -(1.0/ma.SR) : max(ba.db2linear(-70)) : ba.linear2db;\n";
 	prog=prog+"sample(x) = so.sound(ds, x);\n";
-	prog=prog+"ingain(i) = vslider(\"[0]gain%2i\",0.01,0,2,0.01) : si.smoo;\n";
-	prog=prog+"sgain(i) = vslider(\"[0]gain%2i\",0.01,0,2,0.01) : si.smoo;\n";
+	prog=prog+"ingain(i) = vslider(\"[0]gain%2i\",0.0,0,2,0.01) : si.smoo;\n";
+	prog=prog+"sgain(i) = vslider(\"[0]gain%2i\",0.0,0,2,0.01) : si.smoo;\n";
 	prog=prog+"sspeed(i)=vslider(\"[1]speed%2i\",1.0,0,2,0.01) : si.smoo;\n";
 	prog=prog+"lect2(x)=hgroup(\"Player\",x);\n";
 	
