@@ -3622,10 +3622,11 @@ void controlGainPave(){
 	float newR;
 	int nbc=0;
 	float maxDt=0;
+	float mgain=0.0;
 	for(int i=0;i<tablePave.size();i++){
 		newR=tablePave[i].rayon*tablePave[i].scale;
+		mx=tablePave[i].gainMax/newR;
 		for(int j=0;j<tableMixer.size();j++){
-			mx=tablePave[i].gainMax/newR;
 			dt=distance(tablePave[i].pavX+newR,tablePave[i].pavY+newR,tableMixer[j].getPosX(),tableMixer[j].getPosY());
 			if(dt<newR){
 				if(tablePave[i].trouNoir==0){
@@ -3639,13 +3640,17 @@ void controlGainPave(){
 				if(maxDt<tablePave[i].gainMin){
 					maxDt=tablePave[i].gainMin;
 				}
-			}else{
+			}
+			else{
 				maxDt=tablePave[i].gainMin;
 			}
-			string cm="/fileFx/Mixer/P"+to_string(i)+"/Player/Param/gain_"+to_string(i);
-			oscSendGain(cm,maxDt);
+			mgain=mgain+maxDt;
+			nbc++;
 		}
+		string cm="/fileFx/Mixer/P"+to_string(i)+"/Player/Param/gain_"+to_string(i);
+		oscSendGain(cm,mgain/nbc);
 	}
+	
 }
 void controlParamsMixer(int id,float dx, float dt2){
 	float amp;
