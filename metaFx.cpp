@@ -3649,6 +3649,8 @@ void controlGainPave(){
 		}
 		string cm="/fileFx/Mixer/P"+to_string(i)+"/Player/Param/gain_"+to_string(i);
 		oscSendGain(cm,mgain/nbc);
+		nbc=0;
+		mgain=0;
 	}
 	
 }
